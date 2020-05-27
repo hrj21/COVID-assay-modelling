@@ -16,7 +16,7 @@ library(patchwork)
 # Bead assay --------------------------------------------------------------
 # Read the data -----------------------------------------------------------
 
-bead <- read_csv("data/20200512_BEADS_Analysis.csv")
+bead <- read_csv("data/20200526_BEADS_Analysis.csv")
 
 bead
 
@@ -91,7 +91,7 @@ long %>%
        title = "Reactivity for each patient, ordered by S1 IgG reactivity",
        subtitle = "Distinct log2-transformed y axis per protein target") +
   theme_elements + 
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+  theme(axis.text.x = element_blank())
 
 ggsave("plots/Beads_log2_axis.png", width = 12, height = 6) 
 
@@ -176,7 +176,8 @@ learners <- list(wrapped_lda, wrapped_logreg, wrapped_svm, wrapped_xgb)
 
 bench_results <- benchmark(learners, bead_task, holdout, models = TRUE)
 
-saveRDS(bench_results, paste("models/bench_results", Sys.time(), sep = "_"))
+saveRDS(bench_results, paste("/models/bench_results", Sys.time(), sep = "_"))
+save(bench_results, file = paste("models/bench_results", Sys.time(), sep = "_"))
 
 bench_results <- readRDS("models/bench_results_2020-05-16")
 
